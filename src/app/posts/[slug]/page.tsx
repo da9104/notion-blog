@@ -106,9 +106,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     )}
                 </div>
 
-                {/* <div className="prose prose-stone dark:prose-invert max-w-none">
+                <div className="prose prose-stone dark:prose-invert max-w-none">
                     <NotionRenderer blocks={blocks as unknown as BlockObjectResponse[]} />
-                </div> */}
+                </div>
             </article>
         </div>
     )

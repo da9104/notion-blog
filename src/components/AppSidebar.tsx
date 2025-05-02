@@ -11,8 +11,6 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-    SidebarInput,
-    SidebarFooter,
 } from "@/components/ui/sidebar"
 import { notion } from "@/lib/notion"
 import { databaseId } from "@/lib/notion"
