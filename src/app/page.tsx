@@ -29,15 +29,13 @@ async function getPosts() {
 
 export default async function Home() {
   const posts = await getPosts()
-  
-  console.log("Database ID:", process.env.NOTION_DATABASE_ID);
-  // Add logging to inspect data
-  // console.log("Posts data:", JSON.stringify(posts[0]?.properties?.File || {}, null, 2))
+
+  console.log("Posts data:", JSON.stringify(posts[0]?.properties?.File || {}, null, 2))
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="relative md:max-w-screen-xl w-full mx-auto py-10">
       <div className="flex flex-col items-center text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">My Notion Blog</h1>
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">Dami Blog</h1>
         <p className="text-xl text-muted-foreground max-w-[600px]">A blog powered by Notion as a CMS and Next.js</p>
       </div>
 

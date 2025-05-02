@@ -6,7 +6,6 @@ if (!process.env.NOTION_DATABASE_ID || !process.env.NOTION_TOKEN) {
 // The ID of your Notion database
 export const databaseId = process.env.NOTION_DATABASE_ID || ""
 
-
 // The API key for your Notion integration
 export const notionApiKey = process.env.NOTION_API_KEY || ""
 
