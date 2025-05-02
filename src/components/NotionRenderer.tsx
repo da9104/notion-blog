@@ -1,8 +1,10 @@
 "use client"
+import React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { BlockObjectResponse, RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints"
 
-export function NotionRenderer({ blocks }: { blocks: any[] }) {
+export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
   return (
     <div className="space-y-6">
       {blocks.map((block) => {
@@ -12,7 +14,7 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
           case "paragraph":
             return (
               <p key={id}>
-                {block.paragraph.rich_text.map((text: any, index: number) => (
+                {block.paragraph.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </p>
@@ -21,7 +23,7 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
           case "heading_1":
             return (
               <h1 key={id} className="text-3xl font-bold mt-8 mb-4">
-                {block.heading_1.rich_text.map((text: any, index: number) => (
+                {block.heading_1.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </h1>
@@ -30,7 +32,7 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
           case "heading_2":
             return (
               <h2 key={id} className="text-2xl font-bold mt-8 mb-4">
-                {block.heading_2.rich_text.map((text: any, index: number) => (
+                {block.heading_2.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </h2>
@@ -39,7 +41,7 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
           case "heading_3":
             return (
               <h3 key={id} className="text-xl font-bold mt-6 mb-4">
-                {block.heading_3.rich_text.map((text: any, index: number) => (
+                {block.heading_3.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </h3>
@@ -48,7 +50,7 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
           case "bulleted_list_item":
             return (
               <li key={id}>
-                {block.bulleted_list_item.rich_text.map((text: any, index: number) => (
+                {block.bulleted_list_item.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </li>
@@ -57,14 +59,16 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
           case "numbered_list_item":
             return (
               <li key={id}>
-                {block.numbered_list_item.rich_text.map((text: any, index: number) => (
+                {block.numbered_list_item.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </li>
             )
 
           case "image":
-            const imageUrl = block.image.file?.url || block.image.external?.url
+            const imageUrl = block.image.type === "external" 
+              ? block.image.external.url 
+              : block.image.file.url
             const caption = block.image.caption?.length ? block.image.caption[0].plain_text : ""
 
             return (
@@ -87,7 +91,7 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
             return (
               <pre key={id} className="p-4 bg-muted rounded-md overflow-x-auto">
                 <code>
-                  {block.code.rich_text.map((text: any, index: number) => (
+                  {block.code.rich_text.map((text: RichTextItemResponse, index: number) => (
                     <span key={index}>{text.plain_text}</span>
                   ))}
                 </code>
@@ -97,7 +101,7 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
           case "quote":
             return (
               <blockquote key={id} className="border-l-4 pl-4 italic">
-                {block.quote.rich_text.map((text: any, index: number) => (
+                {block.quote.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </blockquote>
@@ -118,10 +122,30 @@ export function NotionRenderer({ blocks }: { blocks: any[] }) {
   )
 }
 
-function RichText({ text }: { text: any }) {
+function RichText({ text }: { text: RichTextItemResponse }) {
   if (!text) return null
 
-  let content = text.plain_text || ""
+  const content: React.ReactNode = text.plain_text || ""
+
+  if (text.annotations.code) {
+    return <code className="bg-muted px-1 py-0.5 rounded">{content}</code>
+  }
+
+  if (text.annotations.underline) {
+    return <u>{content}</u>
+  }
+
+  if (text.annotations.strikethrough) {
+    return <s>{content}</s>
+  }
+
+  if (text.annotations.italic) {
+    return <em>{content}</em>
+  }
+
+  if (text.annotations.bold) {
+    return <strong>{content}</strong>
+  }
 
   if (text.href) {
     return (
@@ -129,26 +153,6 @@ function RichText({ text }: { text: any }) {
         {content}
       </Link>
     )
-  }
-
-  if (text.annotations.bold) {
-    content = <strong>{content}</strong>
-  }
-
-  if (text.annotations.italic) {
-    content = <em>{content}</em>
-  }
-
-  if (text.annotations.strikethrough) {
-    content = <s>{content}</s>
-  }
-
-  if (text.annotations.underline) {
-    content = <u>{content}</u>
-  }
-
-  if (text.annotations.code) {
-    content = <code className="bg-muted px-1 py-0.5 rounded">{content}</code>
   }
 
   return <>{content}</>

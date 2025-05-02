@@ -93,7 +93,7 @@ export default async function Home() {
                 </CardContent>
                 <CardFooter>
                   <div className="flex flex-wrap gap-2">
-                    {tags.map((tag: any) => (
+                    {tags.map((tag: { id: string; name: string }) => (
                       <Badge key={tag.id} variant="secondary">
                         {tag.name}
                       </Badge>

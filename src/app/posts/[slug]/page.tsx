@@ -4,7 +4,7 @@ import { formatDate } from "@/lib/utils"
 import { notFound } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
 import { NotionRenderer } from "@/components/NotionRenderer"
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints"
+import { PageObjectResponse, BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints"
 import Image from "next/image"
 // Initialize Notion client
 const notion = new Client({
@@ -47,13 +47,13 @@ async function getPostBySlug(slug: string) {
     }
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
-    // Await params before accessing slug property
-    const { slug } = await params;
-    const post = await getPostBySlug(slug);
+// Remove the interface and use the standard Next.js App Router pattern
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+    const resolvedParams = await params;
+    const post = await getPostBySlug(resolvedParams.slug);
 
     if (!post) {
-        notFound()
+        notFound();
     }
 
     const { page, blocks } = post
@@ -98,7 +98,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
                     )}
                     {tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
-                            {tags.map((tag: any) => (
+                            {tags.map((tag: { id: string; name: string }) => (
                                 <Badge key={tag.id} variant="secondary">
                                     {tag.name}
                                 </Badge>
@@ -108,9 +108,12 @@ export default async function PostPage({ params }: { params: { slug: string } })
                 </div>
 
                 <div className="prose prose-stone dark:prose-invert max-w-none">
-                    <NotionRenderer blocks={blocks} />
+                    <NotionRenderer blocks={blocks as unknown as BlockObjectResponse[]} />
                 </div>
             </article>
         </div>
     )
 }
+
+// Keep this
+export const dynamic = 'force-dynamic';
