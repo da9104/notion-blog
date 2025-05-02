@@ -12,38 +12,42 @@ const notion = new Client({
 })
 
 async function getPostBySlug(slug: string) {
-    const response = await notion.databases.query({
-        database_id: databaseId,
-        filter: {
-            and: [
-                {
-                    property: "Slug",
-                    rich_text: {
-                        equals: slug,
+    try {
+        const response = await notion.databases.query({
+            database_id: databaseId,
+            filter: {
+                and: [
+                    {
+                        property: "Slug",
+                        rich_text: {
+                            equals: slug,
+                        },
                     },
-                },
-                {
-                    property: "Published",
-                    checkbox: {
-                        equals: true,
+                    {
+                        property: "Published",
+                        checkbox: {
+                            equals: true,
+                        },
                     },
-                },
-            ],
-        },
-    })
-
-    if (!response.results.length) {
-        return null
-    }
-
-    const page = response.results[0]
-    const blocks = await notion.blocks.children.list({
-        block_id: page.id,
-    })
-
-    return {
-        page: page as PageObjectResponse,
-        blocks: blocks.results,
+                ],
+            },
+        })
+    
+        if (!response.results.length) {
+            return null
+        }
+    
+        const page = response.results[0]
+        const blocks = await notion.blocks.children.list({
+            block_id: page.id,
+        })
+        return {
+            page: page as PageObjectResponse,
+            blocks: blocks.results,
+        }
+    } catch (error) {
+        console.error("Error fetching post:", error)
+        notFound()
     }
 }
 
@@ -116,4 +120,5 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 }
 
 // Keep this
+export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic';
