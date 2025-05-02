@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NOTION_DATABASE_ID: process.env.NOTION_DATABASE_ID,
+  },
   images: {
     domains: [
       's3.us-west-2.amazonaws.com',

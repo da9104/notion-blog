@@ -1,17 +1,11 @@
 import Link from "next/link"
-// import { notion } from "@/lib/notion"
-import { Client } from "@notionhq/client"
+import { notion } from "@/lib/notion"
 import { databaseId } from "@/lib/notion"
 import { formatDate } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints"
 import Image from "next/image"
-
-// Initialize Notion client
-const notion = new Client({
-  auth: process.env.NOTION_API_KEY,
-})
 
 async function getPosts() {
   const response = await notion.databases.query({
@@ -36,8 +30,9 @@ async function getPosts() {
 export default async function Home() {
   const posts = await getPosts()
   
+  console.log("Database ID:", process.env.NOTION_DATABASE_ID);
   // Add logging to inspect data
-  console.log("Posts data:", JSON.stringify(posts[0]?.properties?.File || {}, null, 2))
+  // console.log("Posts data:", JSON.stringify(posts[0]?.properties?.File || {}, null, 2))
 
   return (
     <div className="container mx-auto py-10">

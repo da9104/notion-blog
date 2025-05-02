@@ -1,4 +1,4 @@
-import { Client } from "@notionhq/client"
+import { notion } from "@/lib/notion"
 import { databaseId } from "@/lib/notion"
 import { formatDate } from "@/lib/utils"
 import { notFound } from "next/navigation"
@@ -6,10 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { NotionRenderer } from "@/components/NotionRenderer"
 import { PageObjectResponse, BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints"
 import Image from "next/image"
-// Initialize Notion client
-const notion = new Client({
-    auth: process.env.NOTION_API_KEY,
-})
 
 async function getPostBySlug(slug: string) {
     try {
@@ -51,7 +47,6 @@ async function getPostBySlug(slug: string) {
     }
 }
 
-// Remove the interface and use the standard Next.js App Router pattern
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
     const post = await getPostBySlug(resolvedParams.slug);
