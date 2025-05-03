@@ -102,7 +102,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
         <Sidebar {...props}>
             <SidebarContent className="bg-white w-[220px]">
                 <SidebarHeader>
-                    <p className="text-2xl font-bold md:hidden block">Dami Blog</p>
+                    <p className="text-2xl font-bold md:hidden block">Dami UI</p>
                 </SidebarHeader>
                 <SidebarGroup>
                     <SidebarGroupLabel>Navigation</SidebarGroupLabel>
