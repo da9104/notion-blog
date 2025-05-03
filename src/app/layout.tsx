@@ -4,8 +4,8 @@ import "./globals.css";
 import ThemeProvider from "@/contexts/ThemeProvider";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/AppSidebar"
+import SearchBar from "@/components/SearchBar"
 import Link from "next/link";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,29 +35,18 @@ export default function RootLayout({
                       <div className="flex items-center gap-2">
                         <SidebarTrigger className="md:hidden" />
                         <Link href="/" className="font-bold text-xl">
-                          Notion Blog
+                          DAMI UI
                         </Link>
                       </div>
-                      <nav className="hidden md:block mr-8">
-                        <ul className="flex gap-4">
-                          <li>
-                            <Link href="/" className="hover:underline">
-                              Home
-                            </Link>
-                          </li>
-                          <li>
-                            <Link href="/about" className="hover:underline">
-                              About
-                            </Link>
-                          </li>
-                        </ul>
+                      <nav className="md:flex items-center gap-2 hidden mr-8">
+                        <SearchBar />
                       </nav>
                     </div>
                   </header>
                   <main className="md:pl-60 pl-0 flex-1">{children}</main>
                   <footer className="w-full border-t mt-auto md:pl-60">
                     <div className="container mx-auto py-6 text-center text-muted-foreground">
-                      © {new Date().getFullYear()} Notion Blog. All rights reserved.
+                      © {new Date().getFullYear()} Dami UI. All rights reserved.
                     </div>
                   </footer>
                 </div>

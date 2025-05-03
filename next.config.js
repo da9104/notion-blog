@@ -25,9 +25,7 @@ const nextConfig = {
       }
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@notionhq/client']
-  }
+  serverExternalPackages: ['@notionhq/client']
 }
 
 module.exports = nextConfig 

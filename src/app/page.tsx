@@ -46,7 +46,7 @@ export default async function Home() {
           const slugProperty = post.properties.Slug as { rich_text: Array<{ plain_text: string }> }
           const dateProperty = post.properties.PublishedDate as { date: { start: string } | null }
           const tagsProperty = post.properties.Tags as { multi_select: Array<{ id: string; name: string }> }
-          const descProperty = post.properties.Content as { rich_text: Array<{ plain_text: string }> } | undefined
+          const descProperty = post.properties.Description as { rich_text: Array<{ plain_text: string }> } | undefined
           const fileProperty = post.properties.File as unknown as { 
             type: "file" | "files", 
             file?: { url: string }, 

@@ -31,13 +31,15 @@ async function getCategories() {
     const posts = response.results as PageObjectResponse[]
 
     // Extract all tags from posts
-    const allTags: { id: string; name: string }[] = []
+    const allTags: { id: string; name: string; slug: string }[] = []
     posts.forEach((post) => {
         const tagsProperty = post.properties.Tags as { multi_select: Array<{ id: string; name: string }> }
+        const slugProperty = post.properties.Slug as { rich_text: Array<{ plain_text: string }> }
+
         const tags = tagsProperty.multi_select || []
         tags.forEach((tag) => {
             if (!allTags.some((t) => t.id === tag.id)) {
-                allTags.push(tag)
+                allTags.push({ id: tag.id, name: tag.name, slug: slugProperty.rich_text[0]?.plain_text || post.id })
             }
         })
     })
@@ -52,7 +54,7 @@ async function getCategories() {
         return {
             id: tag.id,
             name: tag.name,
-            slug: tag.name.toLowerCase(),
+            slug: tag.slug,
             count,
         }
     })
@@ -101,7 +103,6 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
             <SidebarContent className="bg-white w-[220px]">
                 <SidebarHeader>
                     <p className="text-2xl font-bold md:hidden block">Dami Blog</p>
-                    {/* <SidebarInput placeholder="Search posts..." /> */}
                 </SidebarHeader>
                 <SidebarGroup>
                     <SidebarGroupLabel>Navigation</SidebarGroupLabel>
