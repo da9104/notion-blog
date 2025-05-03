@@ -25,13 +25,11 @@ async function getSearchResults(query: string) {
   }
 }
 
-type SearchPageProps = {
-  params?: { slug?: string },
-  searchParams: { [key: string]: string | string[] | undefined }
-}
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const query = typeof searchParams.q === 'string' ? searchParams.q : ""
+//({ params }: { params: Promise<{ slug: string }> }) 
+export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const resolvedParams = await searchParams;
+  const query = typeof resolvedParams.q === 'string' ? resolvedParams.q : ""
   const posts = await getSearchResults(query)
 
   return (
