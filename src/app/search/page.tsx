@@ -25,8 +25,13 @@ async function getSearchResults(query: string) {
   }
 }
 
-export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
-  const query = searchParams.q || ""
+type SearchPageProps = {
+  params?: { slug?: string },
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const query = typeof searchParams.q === 'string' ? searchParams.q : ""
   const posts = await getSearchResults(query)
 
   return (
