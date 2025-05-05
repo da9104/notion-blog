@@ -6,6 +6,8 @@ import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/s
 import { AppSidebar } from "@/components/AppSidebar"
 import SearchBar from "@/components/SearchBar"
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/react"
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,6 +27,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning >
       <body className={geistSans.className} >
       <ThemeProvider defaultTheme="system" enableSystem disableTransitionOnChange>
+        <Analytics />
           <SidebarProvider>
             <div className="w-full flex min-h-screen">
               <AppSidebar variant="sidebar" collapsible="icon" />
