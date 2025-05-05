@@ -153,7 +153,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                                         postFileProperty?.files?.[0]?.external?.url
                         
                         return (
-                            <Card key={post.id} className="overflow-hidden flex flex-col h-full">
+                            <Card key={post.id} className="overflow-hidden flex flex-col h-full border border-gray-200 dark:border-[#333333]">
                                 <Link href={`/posts/${postSlug}`}>
                                     {postImageUrl && (
                                         <div className="relative w-full h-48">

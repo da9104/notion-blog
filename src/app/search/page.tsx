@@ -73,7 +73,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
             return (
               <Link href={`/posts/${slug}`} key={post.id}>
-                <Card className="h-full overflow-hidden hover:shadow-lg transition-shadow">
+                <Card className="h-full overflow-hidden hover:shadow-lg transition-shadow border border-gray-200 dark:border-[#333333]">
                   <CardHeader>
                     <CardTitle className="line-clamp-2">{title}</CardTitle>
                     {date && <CardDescription>{formatDate(date)}</CardDescription>}

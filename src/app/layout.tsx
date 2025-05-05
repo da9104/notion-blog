@@ -33,7 +33,7 @@ export default function RootLayout({
               <AppSidebar variant="sidebar" collapsible="icon" />
               <SidebarInset>
                 <div className="flex flex-col min-h-screen">
-                  <header className="w-full border-b md:pl-60">
+                  <header className="w-full border-b md:pl-60 dark:border-[#333333] border-gray-200">
                     <div className="container mx-auto py-4 flex justify-between items-center">
                       <div className="flex items-center gap-2">
                         <SidebarTrigger className="md:hidden" />
@@ -47,7 +47,7 @@ export default function RootLayout({
                     </div>
                   </header>
                   <main className="md:pl-60 pl-0 flex-1">{children}</main>
-                  <footer className="w-full border-t mt-auto md:pl-60">
+                  <footer className="w-full border-t mt-auto md:pl-60 dark:border-[#333333] border-gray-200">
                     <div className="container mx-auto py-6 text-center text-muted-foreground">
                       © {new Date().getFullYear()} Dami UI. All rights reserved.
                     </div>

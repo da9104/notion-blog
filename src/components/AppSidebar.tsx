@@ -99,8 +99,8 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
     const recentPosts = await getRecentPosts()
 
     return (
-        <Sidebar {...props}>
-            <SidebarContent className="bg-white w-[220px]">
+        <Sidebar {...props} className="border-r dark:border-[#333333] border-gray-200">
+            <SidebarContent className="bg-white dark:bg-[#171717] w-[220px] ">
                 <SidebarHeader>
                     <p className="text-2xl font-bold md:hidden block">Dami UI</p>
                 </SidebarHeader>
