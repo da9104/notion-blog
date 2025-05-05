@@ -41,7 +41,7 @@ export default function RootLayout({
                           DAMI UI
                         </Link>
                       </div>
-                      <nav className="md:flex items-center gap-2 hidden mr-8">
+                      <nav className="flex items-center gap-2 md:mr-8 mr-0">
                         <SearchBar />
                       </nav>
                     </div>
@@ -49,6 +49,7 @@ export default function RootLayout({
                   <main className="md:pl-60 pl-0 flex-1">{children}</main>
                   <footer className="w-full border-t mt-auto md:pl-60 dark:border-[#333333] border-gray-200">
                     <div className="container mx-auto py-6 text-center text-muted-foreground">
+                      A blog powered by Notion as a CMS and Next.js <br/>
                       © {new Date().getFullYear()} Dami UI. All rights reserved.
                     </div>
                   </footer>

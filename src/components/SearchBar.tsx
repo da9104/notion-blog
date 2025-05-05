@@ -41,7 +41,7 @@ const SearchBar = () => {
     }
 
     return (
-        <form className="flex items-center gap-2"
+        <form className="flex items-center gap-2 text-xs"
          onSubmit={(e) => {
             e.preventDefault();
             handleSearch(searchQuery);
@@ -57,7 +57,7 @@ const SearchBar = () => {
                 disabled={isSearching}
             />
             <Button variant='outline' type='submit' disabled={isSearching} className="cursor-pointer"   >
-                {isSearching ? 'Searching...' : 'Search'}
+                {isSearching ? 'loading...' : 'search'}
             </Button>
         </form>
     )

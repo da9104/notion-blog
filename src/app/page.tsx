@@ -35,8 +35,8 @@ export default async function Home() {
   return (
     <div className="relative md:max-w-screen-xl w-full mx-auto py-10">
       <div className="flex flex-col items-center text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">Dami Blog</h1>
-        <p className="text-xl text-muted-foreground max-w-[600px]">A blog powered by Notion as a CMS and Next.js</p>
+        <h1 className="text-xl font-bold tracking-tight sm:text-xl mb-4">Dami UI Blog</h1>
+        <p className="text-xl text-muted-foreground">A collection of articles, tutorials, and design system resources for Front End Solution</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
