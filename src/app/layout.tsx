@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/contexts/ThemeProvider";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar"
@@ -7,11 +6,7 @@ import { AppSidebar } from "@/components/AppSidebar"
 import SearchBar from "@/components/SearchBar"
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react"
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Dami UI Design System Blog",
@@ -25,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning >
-      <body className={geistSans.className} >
+      <body className="" >
       <ThemeProvider defaultTheme="system" enableSystem disableTransitionOnChange>
         <Analytics />
           <SidebarProvider>
@@ -57,6 +52,7 @@ export default function RootLayout({
               </SidebarInset>
             </div>
           </SidebarProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

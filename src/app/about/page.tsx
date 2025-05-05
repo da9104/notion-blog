@@ -2,22 +2,46 @@
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-
+import { useToast } from "@/hooks/use-toast"
+import { useState } from "react";
 const AboutPage = () => {
-
+    const { toast } = useToast()
+    const [isLoading, setIsLoading] = useState(false);
+    
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const name = formData.get("name");
         const email = formData.get("email");
         const message = formData.get("message");
-
-        const res = await fetch("/api/send_mail", {
-            method: "POST",
-            body: JSON.stringify({ name, email, message }),
-        });
-        const data = await res.json();
-        console.log(data);
+        
+        try {
+            setIsLoading(true);
+            const res = await fetch("/api/send_mail", {
+                method: "POST",
+                body: JSON.stringify({ name, email, message }),
+            });
+            const data = await res.json();
+            
+            if (res.ok) {
+                toast({
+                    variant: "default",
+                    title: "Message sent!",
+                    description: "Thank you for your message. I'll get back to you soon.",
+                    duration: 2000,
+                });
+                event.currentTarget.reset();
+            }
+        } catch (error) {
+            toast({
+                variant: "destructive",
+                title: "Error",
+                description: "Something went wrong. Please try again.",
+                duration: 2000,
+            });
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -34,10 +58,10 @@ const AboutPage = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-screen-sm">
-                <Input type="text" name="name" placeholder="Name" />
-                <Input type="email" name="email" placeholder="Email" />
-                <Textarea name="message" placeholder="Message" />
-                <Button type="submit">Send</Button>
+                <Input type="text" name="name" placeholder="Name" required />
+                <Input type="email" name="email" placeholder="Email" required />
+                <Textarea name="message" placeholder="Message" required />
+                <Button variant="outline" type="submit" disabled={isLoading}>{isLoading ? "Sending..." : "Send"}</Button>
             </form>
         </div>
     )
