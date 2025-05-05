@@ -12,8 +12,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Dami's Blog",
-  description: "Dami's Blog",
+  title: "Dami UI Design System Blog",
+  description: "Dami UI Design System Blog",
 };
 
 export default function RootLayout({

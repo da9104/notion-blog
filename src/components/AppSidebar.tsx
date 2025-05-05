@@ -166,8 +166,8 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                 </SidebarGroup>
             </SidebarContent>
             {/* <SidebarFooter>
-        <div className="px-3 py-2 text-xs text-muted-foreground">© {new Date().getFullYear()} Notion Blog</div>
-      </SidebarFooter> */}
+                <div className="px-3 py-2 text-xs text-muted-foreground">© {new Date().getFullYear()} Notion Blog</div>
+            </SidebarFooter> */}
         </Sidebar>
     )
 }
