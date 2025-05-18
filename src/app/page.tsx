@@ -41,9 +41,7 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading ? (
           <div className="flex justify-center items-center h-full">
-            <Skeleton className="w-150 h-150" />
-            <Skeleton className="w-150 h-150" />
-            <Skeleton className="w-150 h-150" />
+            <Loader2 className="w-4 h-4 animate-spin" />
           </div>
         ) : (
           posts.map((post) => {
