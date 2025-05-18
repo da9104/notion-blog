@@ -19,7 +19,7 @@ export default function Home() {
     setIsLoading(true)
     const fetchPosts = async () => {
       try {
-        const fetchedPosts = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/get_posts`)
+        const fetchedPosts = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/get_post`)
         const data = await fetchedPosts.json()
         setPosts(data)
         console.log("Posts data:", JSON.stringify(data[0]?.properties?.File || {}, null, 2))

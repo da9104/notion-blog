@@ -1,3 +1,4 @@
+'use client'
 import type * as React from "react"
 import Link from "next/link"
 import { Tag, Clock, BookOpen, Home } from "lucide-react"
@@ -15,88 +16,46 @@ import {
 import { notion } from "@/lib/notion"
 import { databaseId } from "@/lib/notion"
 import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints"
+import { useState, useEffect } from "react"
 
-// Function to get categories from posts
-async function getCategories() {
-    const response = await notion.databases.query({
-        database_id: databaseId,
-        filter: {
-            property: "Published",
-            checkbox: {
-                equals: true,
-            },
-        },
-    })
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const [categories, setCategories] = useState<any[]>([])
+    const [recentPosts, setRecentPosts] = useState<any[]>([])
+    const [isLoading, setIsLoading] = useState(true)
 
-    const posts = response.results as PageObjectResponse[]
+  useEffect(() => {
+    setIsLoading(true)
+    const fetchCategories = async () => {
+      try {
+        const fetchedCategories = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/get_category`)
+        const data = await fetchedCategories.json()
+        setCategories(data)
+        setRecentPosts(data)
+        console.log("Posts data:", JSON.stringify(data[0]?.properties?.File || {}, null, 2))
+      } catch (error) {
+      console.error("Error fetching posts:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchCategories()
+  }, [])
 
-    // Extract all tags from posts
-    const allTags: { id: string; name: string; slug: string }[] = []
-    posts.forEach((post) => {
-        const tagsProperty = post.properties.Tags as { multi_select: Array<{ id: string; name: string }> }
-        const slugProperty = post.properties.Slug as { rich_text: Array<{ plain_text: string }> }
-
-        const tags = tagsProperty.multi_select || []
-        tags.forEach((tag) => {
-            if (!allTags.some((t) => t.id === tag.id)) {
-                allTags.push({ id: tag.id, name: tag.name, slug: slugProperty.rich_text[0]?.plain_text || post.id })
-            }
-        })
-    })
-
-    // Count posts per tag
-    const categories = allTags.map((tag) => {
-        const count = posts.filter((post) => {
-            const tagsProperty = post.properties.Tags as { multi_select: Array<{ id: string; name: string }> }
-            return tagsProperty.multi_select.some((t) => t.id === tag.id)
-        }).length
-
-        return {
-            id: tag.id,
-            name: tag.name,
-            slug: tag.slug,
-            count,
-        }
-    })
-
-    return categories
-}
-
-// Function to get recent posts
-async function getRecentPosts() {
-    const response = await notion.databases.query({
-        database_id: databaseId,
-        filter: {
-            property: "Published",
-            checkbox: {
-                equals: true,
-            },
-        },
-        sorts: [
-            {
-                property: "PublishedDate",
-                direction: "descending",
-            },
-        ],
-        page_size: 5,
-    })
-
-    const posts = response.results as PageObjectResponse[]
-
-    return posts.map((post) => {
-        const titleProperty = post.properties.Title as { title: Array<{ plain_text: string }> }
-        const slugProperty = post.properties.Slug as { rich_text: Array<{ plain_text: string }> }
-
-        return {
-            title: titleProperty.title[0]?.plain_text || "Untitled",
-            slug: slugProperty.rich_text[0]?.plain_text || post.id,
-        }
-    })
-}
-
-export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const categories = await getCategories()
-    const recentPosts = await getRecentPosts()
+  useEffect(() => {
+    setIsLoading(true)
+    const fetchRecentPosts = async () => {
+      try {
+        const recentPosts = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/get_recent_post`)
+        const data = await recentPosts.json()
+        setRecentPosts(data)
+      } catch (error) {
+        console.error("Error fetching recent posts:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchRecentPosts()
+  }, [])
 
     return (
         <Sidebar {...props} className="border-r dark:border-[#333333] border-gray-200">
@@ -132,7 +91,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                     <SidebarGroupLabel>Categories</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {categories.map((category) => (
+                            {categories && categories.map((category: any) => (
                                 <SidebarMenuItem key={category.id}>
                                     <SidebarMenuButton asChild>
                                         <Link href={`/category/${category.slug}`}>
@@ -151,7 +110,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                     <SidebarGroupLabel>Recent Posts</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {recentPosts.map((post) => (
+                            {recentPosts && recentPosts.map((post: any) => (
                                 <SidebarMenuItem key={post.slug}>
                                     <SidebarMenuButton asChild>
                                         <Link href={`/posts/${post.slug}`}>
