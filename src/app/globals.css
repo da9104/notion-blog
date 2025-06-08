@@ -4,7 +4,6 @@
 :root {
   --background: #ffffff;
   --foreground: #212121;
-
 }
 
 @theme inline {
@@ -21,6 +20,12 @@
   
   }
 }
+
+.dark {
+  --background: #212121;
+  --foreground: #ededed;
+}
+
 
 body {
   background: var(--background);
