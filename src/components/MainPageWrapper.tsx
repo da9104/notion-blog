@@ -15,6 +15,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 import { useToast } from "@/hooks/use-toast"
 import { Skeleton } from "./ui/skeleton"
 
+
 const scaleAnimation = {
     initial: { scale: 0, x: "-50%", y: "-50%" },
     enter: { scale: 1, x: "-50%", y: "-50%", transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] } },
@@ -52,8 +53,9 @@ export default function Component() {
 }
 
 function HomePage({ onNavigate }: { onNavigate: () => void }) {
-    const [posts, setPosts] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [posts, setPosts] = useState<any[]>([])
+    const [blocks, setBlocks] = useState<any[]>([])
     const [modal, setModal] = useState({ active: true, index: 0 })
     const { active, index } = modal;
     const modalContainer = useRef<HTMLDivElement>(null);
@@ -127,9 +129,9 @@ function HomePage({ onNavigate }: { onNavigate: () => void }) {
                     throw new Error(`HTTP error! status: ${fetchedPosts.status}, message: ${JSON.stringify(data)}`)
                 }
 
-                setPosts(data)
+                setPosts(data.posts)
+                setBlocks(data.blocks || [])
 
-                console.log("Posts data:", JSON.stringify(data[0]?.properties?.File || {}, null, 2))
             } catch (error) {
                 console.error("Error fetching posts:", error)
                 // Add user-friendly error display
@@ -156,7 +158,6 @@ function HomePage({ onNavigate }: { onNavigate: () => void }) {
             {/* Header */}
             <header className="p-6 flex justify-between items-center">
                 <h1 className="text-2xl font-bold">Dami Ui</h1>
-
             </header>
 
             {/* Main Content */}
@@ -178,52 +179,87 @@ function HomePage({ onNavigate }: { onNavigate: () => void }) {
                                     delay: 2000,
                                 }),
                             ]}
-                            className="relative w-full" >
-                            <CarouselContent >
+                            className="md:w-screen w-full">
+                            <CarouselContent className="flex flex-row gap-2">
+                                {
+                                    isLoading ? (
+                                        <div className="flex flex-row gap-4 flex-shrink-0 w-[300px] h-[200px] bg-white p-4">
+                                            <Skeleton className="w-full h-full" />
+                                            <Skeleton className="w-full h-full" />
+                                            <Skeleton className="w-full h-full" />
+                                        </div>
+                                    ) :
+                                        posts.map((post) => {
+                                            const titleProperty = post.properties.Title as { title: Array<{ plain_text: string }> }
+                                            const title = titleProperty.title[0]?.plain_text || "Untitled"
 
-                                <CarouselItem className="flex flex-row gap-4" >
+                                            // Try to extract image URL from File property first (preferred method)
+                                            const fileProperty = post.properties.File as unknown as {
+                                                type: "file" | "files",
+                                                file?: { url: string },
+                                                files?: Array<{ type: "file" | "external", file?: { url: string }, external?: { url: string }, name: string }>
+                                            } | undefined
 
-                                    <Image
-                                        onClick={onNavigate}
-                                        key='1'
-                                        src="/images/pavlo-talpa-zmv-_r6hbe8-unsplash.jpg"
-                                        alt="Hero"
-                                        width={300}
-                                        height={200}
-                                        className="object-cover aspect-video flex-shrink-0 w-[300px] h-[200px]"
-                                    />
+                                            // Get URL from either file or files property format
+                                            let imageUrl = fileProperty?.file?.url ||
+                                                fileProperty?.files?.[0]?.file?.url ||
+                                                fileProperty?.files?.[0]?.external?.url
 
-                                    {
-                                        isLoading ? (
-                                            <div className="flex flex-row gap-4 flex-shrink-0 w-[300px] h-[200px] bg-white p-4">
-                                                <Skeleton className="w-full h-full" />
-                                                <Skeleton className="w-full h-full" />
-                                                <Skeleton className="w-full h-full" />
-                                            </div>
-                                        ) :
-                                       posts.map((post) => {
-                                        const titleProperty = post.properties.Title as { title: Array<{ plain_text: string }> }
-                                        const title = titleProperty.title[0]?.plain_text || "Untitled"
-                                        const fileProperty = post.properties.File as any
-                                        const imageUrl = fileProperty?.files?.[0]?.file?.url ||
-                                            fileProperty?.files?.[0]?.external?.url ||
-                                            fileProperty?.file?.url
-                                        const slug = post.properties.Slug?.rich_text[0]?.plain_text || post.id
+                                            // If no File property image, try to find image from blocks (fallback)
+                                            if (!imageUrl) {
+                                                const imageBlock = blocks.find(
+                                                    (block: any) => block.type === 'image' && block.postId === post.id
+                                                );
 
-                                        return (
-                                            <Link href={`/posts/${slug}`} key={post.id}>
-                                                <Card key={post.id} className="flex-shrink-0 w-[300px] h-[200px] bg-white p-4">
-                                                    <h1 className="text-lg font-bold">{title}</h1>
-                                                    {imageUrl && <Image src={imageUrl} alt="Hero" width={300} height={200} className="object-cover aspect-video flex-shrink-0 w-[300px] h-[200px]" />}
-                                                </Card>
-                                            </Link>
+                                                if (imageBlock) {
+                                                    imageUrl = imageBlock.image.type === 'external'
+                                                        ? imageBlock.image.external.url
+                                                        : imageBlock.image.file.url;
+                                                }
+                                            }
+
+                                            const slug = post.properties.Slug?.rich_text[0]?.plain_text || post.id
+
+                                            return (
+                                                <CarouselItem key={post.id} className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/5">
+                                                    <Link href={`/posts/${slug}`}>
+                                                        <Card className="h-[200px] bg-white p-2 flex flex-col">
+                                                            {imageUrl && (
+                                                                <div className="w-full h-full relative bg-gray-100 flex items-center justify-center text-sm text-gray-500 rounded-md overflow-hidden">
+                                                                    <Image
+                                                                        src={imageUrl}
+                                                                        alt={title}
+                                                                        fill
+                                                                        className="object-cover"
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                            <h1 className="text-lg font-bold truncate p-2">{title}</h1>
+                                                        </Card>
+                                                    </Link>
+                                                </CarouselItem>
+                                            )
+                                        }
                                         )
-                                    })
-                                    }
+                                }
+                                <CarouselItem className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/5">
+                                    <Card onClick={onNavigate} className="cursor-pointer h-[200px] bg-white p-2 flex flex-col relative overflow-hidden">
+                                        <Image
+                                            key='about-page'
+                                            src="/images/pavlo-talpa-zmv-_r6hbe8-unsplash.jpg"
+                                            alt="About page"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-black/40 " />
+                                        <div className="relative flex flex-col justify-end h-full">
+                                            <h1 className="text-lg font-bold truncate p-2 text-white">About Page</h1>
+                                        </div>
+                                    </Card>
                                 </CarouselItem>
                             </CarouselContent>
-                            <CarouselPrevious className="border-0 absolute top-1/2 left-0 -translate-y-1/2 z-50" />
-                            <CarouselNext className="border-0 absolute top-1/2 right-0 -translate-y-1/2 z-50" />
+                            <CarouselPrevious className="border-0 absolute top-1/2 left-0 -translate-y-1/2 z-[100]" />
+                            <CarouselNext className="border-0 absolute top-1/2 right-0 -translate-y-1/2 z-[100]" />
                         </Carousel>
                     </motion.div>
 
@@ -235,7 +271,7 @@ function HomePage({ onNavigate }: { onNavigate: () => void }) {
                     </div>
                 </div>
                 {/* <motion.div ref={cursor} className='bg-amber-400 rounded-full w-10 h-10 absolute top-0 left-0 pointer-events-none z-50' variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}></motion.div> */}
-                <motion.div ref={cursorLabel} className='bg-amber-400 text-white rounded-full px-2 py-1 absolute top-0 left-0 pointer-events-none z-50  ' variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>View</motion.div>
+                <motion.div ref={cursorLabel} className='bg-blue-800 text-white rounded-full px-3 py-4 absolute top-0 left-0 pointer-events-none z-50' variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>View</motion.div>
             </motion.div>
 
             <div>

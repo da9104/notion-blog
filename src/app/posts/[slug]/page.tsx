@@ -37,10 +37,15 @@ async function getPostBySlug(slug: string) {
         const blocks = await notion.blocks.children.list({
             block_id: page.id,
         })
+
+        console.log(blocks.results, "blocks")
+
         return {
             page: page as PageObjectResponse,
             blocks: blocks.results,
         }
+
+      
     } catch (error) {
         console.error("Error fetching post:", error)
         notFound()
