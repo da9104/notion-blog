@@ -155,10 +155,6 @@ function HomePage({ onNavigate }: { onNavigate: () => void }) {
             transition={{ duration: 0.5 }}
             className="min-h-screen flex flex-col"
         >
-            {/* Header */}
-            <header className="p-6 flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Dami Ui</h1>
-            </header>
 
             {/* Main Content */}
             <motion.div
@@ -271,7 +267,7 @@ function HomePage({ onNavigate }: { onNavigate: () => void }) {
                     </div>
                 </div>
                 {/* <motion.div ref={cursor} className='bg-amber-400 rounded-full w-10 h-10 absolute top-0 left-0 pointer-events-none z-50' variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}></motion.div> */}
-                <motion.div ref={cursorLabel} className='bg-blue-800 text-white rounded-full px-3 py-4 absolute top-0 left-0 pointer-events-none z-50' variants={scaleAnimation} initial="initial" animate={active ? "enter" : "closed"}>View</motion.div>
+                <motion.div ref={cursorLabel} className='bg-blue-800 text-white rounded-full px-3 py-4 absolute top-0 left-0 pointer-events-none z-50'  initial="initial" animate={active ? "enter" : "closed"}>View</motion.div>
             </motion.div>
 
             <div>
