@@ -5,7 +5,7 @@ import ThemeProvider from "@/contexts/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "@/components/ui/toaster"
 import { cn } from "@/lib/utils";
-import { Header } from "@/components/layout/Header/Header";
+import { Header } from "@/components/layout/Header/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

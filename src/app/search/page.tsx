@@ -41,6 +41,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
 
       {posts.length === 0 ? (
         <div className="text-center py-10">
+          
           <p className="text-xl">No posts found matching your search query.</p>
           <Link href="/" className="text-primary hover:underline mt-4 inline-block">
             Return to home

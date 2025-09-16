@@ -8,9 +8,9 @@ export function Footer() {
 
   return (
     <footer className="p-sides ">
-      <div className="w-full md:h-[532px] p-sides md:p-11 text-background bg-black rounded-[12px] flex flex-col justify-between max-md:gap-8">
+      <div className="w-full md:h-[532px] h-[250px] p-sides md:p-11 text-background bg-black rounded-[12px] flex flex-col justify-between max-md:gap-8">
         <div className="flex flex-col justify-between md:flex-row">
-          <p className="text-6xl font-bold shrink-0 text-white">©THUNDER K</p>
+          <p className="md:text-[10rem] text-7xl font-bold shrink-0 text-white">©DAMI UI</p>
           {/* <ShopLinks collections={collections} className="max-md:hidden" align="right" /> */}
           {/* <span className="mt-3 italic font-semibold md:hidden text-white">Refined. Minimal. Never boring.</span> */}
         </div>

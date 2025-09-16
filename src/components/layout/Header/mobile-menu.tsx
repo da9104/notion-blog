@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { navItems } from './Header';
+import { navItems } from './header';
 // import { SidebarLinks } from '../sidebar/product-sidebar-links';
 // import { ShopLinks } from '../shop-links';
 // import { Collection } from '@/lib/shopify/types';

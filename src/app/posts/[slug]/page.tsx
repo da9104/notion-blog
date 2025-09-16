@@ -3,7 +3,7 @@ import { databaseId } from "@/lib/notion"
 import { formatDate } from "@/lib/utils"
 import { notFound } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
-import { NotionRenderer } from "@/components/NotionRenderer"
+import { NotionRenderer } from "@/components/notion-renderer"
 import { PageObjectResponse, BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints"
 import Image from "next/image"
 

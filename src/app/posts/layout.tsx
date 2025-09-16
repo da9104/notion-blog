@@ -1,9 +1,9 @@
 import { SidebarInset } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSidebar"
+import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import Link from "next/link";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/search-bar";
 import { Toaster } from "@/components/ui/toaster";
 
 const BlogLayout = ({ children }: { children: React.ReactNode }) => {
