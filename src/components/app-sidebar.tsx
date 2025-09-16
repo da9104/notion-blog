@@ -13,8 +13,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { notion } from "@/lib/notion"
-import { databaseId } from "@/lib/notion"
 import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints"
 import { useState, useEffect } from "react"
 
@@ -111,7 +109,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {recentPosts && recentPosts.map((post: any) => (
-                                <SidebarMenuItem key={post.slug}>
+                                <SidebarMenuItem key={post.id}>
                                     <SidebarMenuButton asChild>
                                         <Link href={`/posts/${post.slug}`}>
                                             <Clock className="size-4" />

@@ -2,7 +2,8 @@
 
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTheme } from "next-themes";
 
 type ToggleButtonProps = {
   options: Array<{
@@ -22,15 +23,28 @@ const ToggleThemeButton = ({
   ...props
 }: ToggleButtonProps) => {
   const [activeValue, setActiveValue] = useState(defaultValue || options[0].value);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  // useEffect only runs on the client, so now we can safely show the UI
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // or a skeleton loader
+  }
 
   const handleClick = (value: string) => {
     const currentIndex = options.findIndex((option) => option.value === value);
     const nextIndex = (currentIndex + 1) % options.length;
     const newValue = options[nextIndex].value;
     setActiveValue(newValue);
+    setTheme(theme === "dark" ? "light" : "dark")
 
     if (onClick) onClick(newValue);
   };
+
 
   return (
     <button
