@@ -1,4 +1,4 @@
-import Footer from './footer';
+import Footer from './Footer';
 
 export const PageLayout = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   return (
