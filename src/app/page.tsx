@@ -1,5 +1,5 @@
 import { PageLayout } from "@/components/layout/page-layout"
-import { notionFetch, notion } from "@/lib/notion";
+import { notionFetch } from "@/lib/notion";
 import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
@@ -97,9 +97,9 @@ export default async function Home() {
                       )}
                     >
                       <div className="col-span-2">
-                        <Badge className="font-black capitalize rounded-full">POST</Badge>
+                        <Badge className="font-black capitalize rounded-full text-black dark:text-black">POST</Badge>
                       </div>
-                      <Link href={`/posts/${slug}`} className="col-span-1 self-start text-2xl font-semibold">
+                      <Link href={`/posts/${slug}`} className="col-span-1 self-start text-2xl font-semibold text-black dark:text-black">
                         {title}
                       </Link>
                       <div className="col-span-1 mb-10">
@@ -141,7 +141,7 @@ export default async function Home() {
                         />
                       </div>
                     )}
-                    <h1 className="text-lg font-bold truncate p-2">{title}</h1>
+                    <h1 className="text-lg font-bold truncate p-2 text-black dark:text-black">{title}</h1>
                   </Card>
                 </Link>
               </div>
