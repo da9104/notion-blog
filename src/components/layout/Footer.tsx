@@ -1,8 +1,4 @@
 'use client'
-// import { LogoSvg } from './header/logo-svg';
-// import { ShopLinks } from './shop-links';
-// import { SidebarLinks } from './sidebar/product-sidebar-links';
-// import { getCollections } from '@/lib/shopify';
 
 export function Footer() {
 
@@ -22,3 +18,5 @@ export function Footer() {
     </footer>
   );
 }
+
+export default Footer

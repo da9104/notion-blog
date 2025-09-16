@@ -1,11 +1,10 @@
-import MainPageWrapper from "@/components/MainPageWrapper"
 import { PageLayout } from "@/components/layout/page-layout"
 import { notionFetch, notion } from "@/lib/notion";
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { HomeSidebar } from "@/components/layout/Sidebar/home-sidebar";
-import type { BlockObjectResponse, PageObjectResponse, QueryDatabaseResponse, ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { PageObjectResponse, ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Suspense } from "react";
