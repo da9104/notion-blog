@@ -33,7 +33,7 @@ export function Header() {
   }
 
   return (
-    <header className="grid fixed top-0 left-0 z-50 grid-cols-3 items-start w-full p-sides md:grid-cols-12 md:gap-sides">
+    <header className="grid fixed top-0 left-0 z-50 grid-cols-3 items-start w-full p-sides md:grid-cols-12 md:gap-sides text-black dark:text-white">
       <div className="block flex-none md:hidden">
         {/* <MobileMenu collections={collections} /> */}
       </div>
@@ -48,7 +48,7 @@ export function Header() {
               <Link
                 href={item.href}
                 className={cn(
-                  'font-semibold text-base transition-colors duration-200 uppercase',
+                  'font-semibold text-base transition-colors duration-200 uppercase text-black dark:text-white',
                   pathname === item.href ? 'text-foreground' : 'text-foreground/50'
                 )}
                 prefetch

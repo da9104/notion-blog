@@ -34,6 +34,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {    //media.giphy.com
+        protocol: 'https',
+        hostname: 'media.giphy.com',
+      },
     ],
   },
   serverExternalPackages: ['@notionhq/client']

@@ -83,13 +83,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                      fileProperty?.files?.[0]?.external?.url
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10 ">
             <article className="max-w-3xl mx-auto">
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">{title}</h1>
-                    {date && <div className="text-muted-foreground mb-4">{formatDate(date)}</div>}
+                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4 text-black dark:text-white">{title}</h1>
+                    {date && <div className="text-muted-foreground mb-4 text-black dark:text-white">{formatDate(date)}</div>}
                     {descProperty?.rich_text[0]?.plain_text && (
-                        <div className="text-muted-foreground mb-4">{descProperty.rich_text[0].plain_text}</div>
+                        <div className="text-muted-foreground mb-4 text-black dark:text-white">{descProperty.rich_text[0].plain_text}</div>
                     )}
                     {imageUrl && (
                         <Image 
@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                         />
                     )}
                     {tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 text-black dark:text-white">
                             {tags.map((tag: { id: string; name: string }) => (
                                 <Badge key={tag.id} variant="secondary">
                                     {tag.name}
@@ -111,7 +111,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     )}
                 </div>
 
-                <div className="prose prose-stone dark:prose-invert max-w-none">
+                <div className="prose prose-stone dark:prose-invert max-w-none text-black dark:text-white">
                     <NotionRenderer blocks={blocks as unknown as BlockObjectResponse[]} />
                 </div>
             </article>

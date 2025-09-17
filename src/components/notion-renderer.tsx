@@ -13,7 +13,7 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
         switch (type) {
           case "paragraph":
             return (
-              <p key={id}>
+              <p key={id} className='text-black dark:text-white'>
                 {block.paragraph.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -22,7 +22,7 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "heading_1":
             return (
-              <h1 key={id} className="text-3xl font-bold mt-8 mb-4">
+              <h1 key={id} className="text-3xl font-bold mt-8 mb-4 text-black dark:text-white">
                 {block.heading_1.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -31,7 +31,7 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "heading_2":
             return (
-              <h2 key={id} className="text-2xl font-bold mt-8 mb-4">
+              <h2 key={id} className="text-2xl font-bold mt-8 mb-4 text-black dark:text-white">
                 {block.heading_2.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -40,7 +40,7 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "heading_3":
             return (
-              <h3 key={id} className="text-xl font-bold mt-6 mb-4">
+              <h3 key={id} className="text-xl font-bold mt-6 mb-4 text-black dark:text-white">
                 {block.heading_3.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -75,14 +75,14 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
               <figure key={id} className="my-8">
                 <div className="relative h-96 w-full">
                   <Image
-                    src={imageUrl || "/placeholder.svg"}
+                    src={imageUrl || ""}
                     alt={caption || "Blog image"}
                     fill
                     className="object-contain"
                   />
                 </div>
                 {caption && (
-                  <figcaption className="text-center text-sm text-muted-foreground mt-2">{caption}</figcaption>
+                  <figcaption className="text-center text-sm text-muted-foreground mt-2 text-black dark:text-white">{caption}</figcaption>
                 )}
               </figure>
             )
@@ -108,11 +108,11 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
             )
 
           case "divider":
-            return <hr key={id} className="my-8" />
+            return <hr key={id} className="my-8 text-black dark:text-white" />
 
           default:
             return (
-              <div key={id} className="text-muted-foreground">
+              <div key={id} className="text-gray-900 dark:text-white">
                 Unsupported block type: {type}
               </div>
             )
@@ -149,7 +149,7 @@ function RichText({ text }: { text: RichTextItemResponse }) {
 
   if (text.href) {
     return (
-      <Link href={text.href} className="text-primary underline">
+      <Link href={text.href} className="text-primary underline text-black dark:text-white">
         {content}
       </Link>
     )

@@ -41,23 +41,22 @@ const SearchBar = () => {
     }
 
     return (
-        <form className="flex items-center gap-2 text-xs"
+        <form className="relative flex items-center gap-2 text-xs"
          onSubmit={(e) => {
             e.preventDefault();
             handleSearch(searchQuery);
          }}
         >
-            <Search className="w-6 h-6" />
             <Input
                 type="text"
                 placeholder="Search"
-                className="w-full"
+                className="md:w-full w-[100px]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 disabled={isSearching}
             />
             <Button variant='outline' type='submit' disabled={isSearching} className="cursor-pointer"   >
-                {isSearching ? 'loading...' : 'search'}
+                {isSearching ? 'loading...' : <Search className="w-6 h-6" /> }
             </Button>
         </form>
     )
