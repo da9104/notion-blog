@@ -57,12 +57,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <Sidebar {...props} className="border-r dark:border-[#333333] border-gray-200">
-            <SidebarContent className="bg-white dark:bg-[#171717] w-[220px] ">
+            <SidebarContent className="bg-white dark:bg-[#171717] w-[220px] text-black dark:text-white">
                 <SidebarHeader>
                     <p className="text-2xl font-bold md:hidden block">Dami UI</p>
                 </SidebarHeader>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+                    <SidebarGroupLabel>Navigation</SidebarGroupLabel>   
                     <SidebarGroupContent>
                         <SidebarMenu>
                             <SidebarMenuItem>

@@ -38,7 +38,7 @@ export function Header() {
         {/* <MobileMenu collections={collections} /> */}
       </div>
       <Link href="/" className="w-full md:h-auto max-w-96 break-keep md:col-span-3 xl:col-span-3" prefetch>
-        <p className="md:block hidden text-3xl font-bold shrink-0 ">©DAMI UI</p>
+        <p className="md:block hidden text-3xl font-bold shrink-0 text-black dark:text-white">©DAMI UI</p>
         {/* <LogoSvg className="w-auto h-6 max-md:place-self-center md:w-full md:h-auto max-w-96" /> */}
       </Link>
       <nav className="flex w-full gap-2 justify-end items-center md:col-span-9 xl:col-span-9">
