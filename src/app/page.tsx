@@ -15,6 +15,9 @@ export default async function Home() {
   const posts = (data ?? []).filter(
     (p): p is PageObjectResponse => "properties" in p
   );
+  // const post = posts.find(p => p.properties.Slug.rich_text[0].plain_text === context.params.slug);
+
+  // const postBlocks = blocks.filter(b => b.postId === post.id);
 
 
   return (
@@ -56,6 +59,7 @@ export default async function Home() {
                 : cover.file.url
               : undefined;
 
+            const postBlocks = blocks.filter(b => b.postId === post.id);
             const imageBlock = (blocks as any[])?.find(
               (b: any) => b.type === 'image' && b?.postId === post.id
             ) as ImageBlockObjectResponse | undefined;
