@@ -54,15 +54,17 @@ const AboutPage = () => {
                 <p>It is a collection of articles, tutorials, and design system resources for Front End Solution.</p>
                 <p>This website is powered by Notion as a CMS and Next.js.</p>
                 <p>I hope You will find a gist featuring Tailwind CSS, React with TypeScript, Framer Motion, GSAP animations, and more.</p>
-                <p>If you have any questions, please contact me here,</p>
+                <p>If you have any questions, please contact me any time!</p>
             </div>
-
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-screen-sm">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-screen-sm pb-10">
                 <Input type="text" name="name" placeholder="Name" required />
                 <Input type="email" name="email" placeholder="Email" required />
                 <Textarea name="message" placeholder="Message" required />
                 <Button variant="outline" type="submit" disabled={isLoading}>{isLoading ? "Sending..." : "Send"}</Button>
             </form>
+
+
+            <a href='/cv_ko.html' className="underline capitalize">View My Korean CV</a>
         </div>
     )
 }

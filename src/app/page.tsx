@@ -7,7 +7,7 @@ import { HomeSidebar } from "@/components/layout/Sidebar/home-sidebar";
 import type { PageObjectResponse, ImageBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 export default async function Home() {
   const { data, blocks } = await notionFetch({})
@@ -18,7 +18,6 @@ export default async function Home() {
   // const post = posts.find(p => p.properties.Slug.rich_text[0].plain_text === context.params.slug);
 
   // const postBlocks = blocks.filter(b => b.postId === post.id);
-
 
   return (
     <PageLayout>
@@ -79,7 +78,7 @@ export default async function Home() {
               fileProperty?.files?.[0]?.external?.url ||
               coverUrl
 
-            if (index === 0) {
+            if (index === 2) {
               return (
                 <div key={post.id} className={cn('min-h-fold flex flex-col relative col-span-2')}>
                   <Link href={`/posts/${slug}`} className="size-full flex-1 flex flex-col" prefetch>
