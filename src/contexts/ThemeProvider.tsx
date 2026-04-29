@@ -1,3 +1,4 @@
+'use client';
 import { ThemeProvider as NextThemeProvider } from "next-themes"
 interface ThemeProviderProps {
   children: React.ReactNode;
@@ -6,13 +7,13 @@ interface ThemeProviderProps {
   disableTransitionOnChange?: boolean;
 }
 
-const ThemeProvider = ({ 
-  children, 
-  defaultTheme = "system", 
-  enableSystem = true, 
-  disableTransitionOnChange = true 
+const ThemeProvider = ({
+  children,
+  defaultTheme = "system",
+  enableSystem = true,
+  disableTransitionOnChange = true
 }: ThemeProviderProps) => {
-  return <NextThemeProvider defaultTheme={defaultTheme} enableSystem={enableSystem} disableTransitionOnChange={disableTransitionOnChange}>{children}</NextThemeProvider>
+  return <NextThemeProvider attribute="class" defaultTheme={defaultTheme} enableSystem={enableSystem} disableTransitionOnChange={disableTransitionOnChange}>{children}</NextThemeProvider>
 }
 
 export default ThemeProvider

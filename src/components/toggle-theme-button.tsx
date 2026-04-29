@@ -2,87 +2,56 @@
 
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState, useEffect } from 'react';
-import { useTheme } from "next-themes";
+import { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
+import { Sun, Moon } from 'lucide-react';
 
-type ToggleButtonProps = {
-  options: Array<{
-    label: React.ReactNode;
-    value: string;
-  }>;
-  defaultValue?: string;
+type ToggleThemeButtonProps = {
   className?: string;
-  onClick?: (value: string) => void;
+  inverted?: boolean;
 };
 
-const ToggleThemeButton = ({
-  options,
-  defaultValue,
-  onClick,
-  className,
-  ...props
-}: ToggleButtonProps) => {
-  const [activeValue, setActiveValue] = useState(defaultValue || options[0].value);
+const ToggleThemeButton = ({ className, inverted }: ToggleThemeButtonProps) => {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
-  // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return null; // or a skeleton loader
+    return <div className={cn('h-[45px] w-[45px] rounded-full', className)} />;
   }
 
-  const handleClick = (value: string) => {
-    const currentIndex = options.findIndex((option) => option.value === value);
-    const nextIndex = (currentIndex + 1) % options.length;
-    const newValue = options[nextIndex].value;
-    setActiveValue(newValue);
-    setTheme(theme === "dark" ? "light" : "dark")
-
-    if (onClick) onClick(newValue);
-  };
-
+  const isDark = resolvedTheme === 'dark';
 
   return (
     <button
-      onClick={() => handleClick(activeValue)}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       className={cn(
-        'relative border-2 border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900 flex items-center justify-center h-[45px] w-[45px] rounded-full overflow-hidden',
+        'relative flex items-center justify-center h-[45px] w-[45px] rounded-full overflow-hidden transition-colors border-2',
+        inverted
+          ? 'border-white/30 hover:border-white hover:bg-white/10'
+          : 'border-[var(--outline-variant)] hover:border-[var(--primary)] hover:bg-[var(--neutral)]',
         className
       )}
-      {...props}
     >
       <div className="relative overflow-hidden h-full w-full flex items-center justify-center">
         <AnimatePresence mode="popLayout">
-          {options.map((option) => {
-            if (option.value !== activeValue) return null;
-
-            return (
-              <motion.div
-                key={option.value}
-                className="absolute flex items-center justify-center"
-                initial={{
-                  y: 40
-                }}
-                animate={{
-                  y: 0
-                }}
-                exit={{
-                  y: -40
-                }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 300,
-                  damping: 30
-                }}
-              >
-                {option.label}
-              </motion.div>
-            );
-          })}
+          <motion.div
+            key={isDark ? 'moon' : 'sun'}
+            className="absolute flex items-center justify-center"
+            initial={{ y: 40 }}
+            animate={{ y: 0 }}
+            exit={{ y: -40 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          >
+            {isDark
+              ? <Moon size={16} className={inverted ? 'text-white' : 'text-[var(--foreground)]'} />
+              : <Sun size={16} className={inverted ? 'text-white' : 'text-[var(--foreground)]'} />
+            }
+          </motion.div>
         </AnimatePresence>
       </div>
     </button>

@@ -1,0 +1,61 @@
+import type { Translations } from './types';
+
+export const en: Translations = {
+  nav: {
+    home: 'Home',
+    archives: 'Archives',
+    contact: 'Contact',
+    about: 'About',
+  },
+  footer: {
+    tagline: 'Refined. Minimal. Never boring.',
+    copyright: '— All rights reserved',
+  },
+  home: {
+    featured: 'Featured Narrative',
+    readStory: 'Read Story',
+    forYou: 'Latest posts',
+    viewAll: 'View All',
+    dailyInsight: 'Daily Insight',
+    quote: 'Simplicity is the ultimate sophistication.',
+    getInTouch: 'Get in Touch',
+    workTogether: "Let's work together.",
+    sayHello: 'Say Hello',
+  },
+  profile: {
+    label: 'About',
+    bio: 'Designer & developer obsessed with craft, editorial systems, and the intersection of code and culture.',
+  },
+  about: {
+    label: 'About',
+    bio: [
+      "I'm a software engineer who enjoys using AI to build practical web and mobile applications that solve real problems around me.",
+      'Over time, I\'ve realised that keeping a journal is essential for relfecting on myself and growing into a better human, and that my opinionated thoughts might help others in a similar situation. ',
+      'Dami UI is where I share my thinking on design principles, along with articles, tutorials, and resources.',
+      'This website is built with Next.js and uses Notion as its CMS.',
+    ],
+    cvLink: 'View Korean CV',
+    contactLabel: 'Get in touch',
+    contactHeading: 'Say hello.',
+    contactDesc: "Whether you have a question or want to discuss a collaboration, I'd love to hear from you.",
+    nameLabel: 'Name',
+    namePlaceholder: 'Your name',
+    emailLabel: 'Email',
+    emailPlaceholder: 'your@email.com',
+    messageLabel: 'Message',
+    messagePlaceholder: 'Your inquiry or feedback...',
+    sendButton: 'Send Message',
+    sendingButton: 'Sending...',
+    successTitle: 'Message sent!',
+    successDesc: "Thank you for your message. I'll get back to you soon.",
+    errorTitle: 'Error',
+    errorDesc: 'Something went wrong. Please try again.',
+  },
+  journal: {
+    archiveLabel: 'Archive',
+    heading: 'Journal',
+    description: 'Selected writings on art, design, and philosophy.',
+    searchPlaceholder: 'Filter articles...',
+    noResults: 'No articles found for',
+  },
+};

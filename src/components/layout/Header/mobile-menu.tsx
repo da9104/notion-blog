@@ -92,7 +92,7 @@ export default function MobileMenu() {
                       asChild
                     >
                       <Link href={item.href} prefetch>
-                        {item.label}
+                        {item.title}
                       </Link>
                     </Button>
                   ))}

@@ -1,25 +1,122 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Tell Tailwind v4: dark: variants respond to the .dark class, not just the media query */
+@variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-tertiary: var(--tertiary);
+  --color-neutral: var(--neutral);
+  --color-surface-container: var(--surface-container);
+  --font-sans: var(--font-body);
+  --font-headline: var(--font-headline);
+  --font-body: var(--font-body);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #212121;
-    --foreground: #ededed;
-  
-  }
+:root {
+  /* Desktop matting — background outside the phone frame */
+  --desktop-mat: #E4E2DE;
+
+  /* Design system tokens — Editorial Curator */
+  --background: #fbf9f5;
+  --foreground: #1B1C1A;
+  --primary: #121212;
+  --tertiary: #707070;
+  --neutral: #EAE8E4;
+  --surface-container: #F0EEEA;
+  --surface-container-high: #EAE8E4;
+  --outline: #747878;
+  --outline-variant: #C4C7C7;
+  --error: #BA1A1A;
+
+  /* Shadcn / Radix compatibility layer */
+  --radius: 0.5rem;
+  --card: #F0EEEA;
+  --card-foreground: #1B1C1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1B1C1A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F0EEEA;
+  --secondary-foreground: #1B1C1A;
+  --muted: #EAE8E4;
+  --muted-foreground: #707070;
+  --accent: #EAE8E4;
+  --accent-foreground: #1B1C1A;
+  --destructive: #BA1A1A;
+  --border: #C4C7C7;
+  --input: #EAE8E4;
+  --ring: #707070;
+
+  /* Layout */
+  --sides: 1.5rem;
+  --modal-sides: 0.75rem;
+  --top-spacing: 5rem;
+  --height-fold: 100svh;
 }
 
 .dark {
-  --background: #212121;
-  --foreground: #ededed;
+  --desktop-mat: #111111;
+  --background: #1A1A1A;
+  --foreground: #F0EEEA;
+  --primary: #F0EEEA;
+  --tertiary: #A0A0A0;
+  --neutral: #2C2C2C;
+  --surface-container: #242424;
+  --surface-container-high: #2C2C2C;
+  --outline: #555858;
+  --outline-variant: #3C3F3F;
+
+  --card: #242424;
+  --card-foreground: #F0EEEA;
+  --popover: #1A1A1A;
+  --popover-foreground: #F0EEEA;
+  --primary-foreground: #1A1A1A;
+  --secondary: #242424;
+  --secondary-foreground: #F0EEEA;
+  --muted: #2C2C2C;
+  --muted-foreground: #A0A0A0;
+  --accent: #2C2C2C;
+  --accent-foreground: #F0EEEA;
+  --border: #3C3F3F;
+  --input: #2C2C2C;
+  --ring: #A0A0A0;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Only apply when no manual preference class is set by next-themes */
+  :root:not(.light):not(.dark) {
+    --background: #1A1A1A;
+    --foreground: #F0EEEA;
+    --primary: #F0EEEA;
+    --tertiary: #A0A0A0;
+    --neutral: #2C2C2C;
+    --surface-container: #242424;
+    --surface-container-high: #2C2C2C;
+    --outline: #555858;
+    --outline-variant: #3C3F3F;
+    --card: #242424;
+    --card-foreground: #F0EEEA;
+    --popover: #1A1A1A;
+    --popover-foreground: #F0EEEA;
+    --primary-foreground: #1A1A1A;
+    --secondary: #242424;
+    --secondary-foreground: #F0EEEA;
+    --muted: #2C2C2C;
+    --muted-foreground: #A0A0A0;
+    --accent: #2C2C2C;
+    --accent-foreground: #F0EEEA;
+    --border: #3C3F3F;
+    --input: #2C2C2C;
+    --ring: #A0A0A0;
+  }
+}
+
+/* Korean locale font fallback */
+:lang(ko) {
+  --font-body: var(--font-ko), 'Noto Sans KR', sans-serif;
 }
 
 html,
@@ -29,61 +126,31 @@ body,
   scroll-behavior: smooth;
 }
 
-  .base-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: var(--sides);
-  }
-
-  .base-gap {
-    gap: var(--sides);
-  }
-
-  .scrollbar-hide {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: transparent;
-    }
+body {
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
+.base-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--sides);
+}
 
-:root {
-  --radius: 0.5rem;
-  --background: 223.81 0% 94%;
-  --foreground: 223.81 0% 4%;
-  --card: 0 0% 88%;
-  --card-foreground: 223.81 0% 4%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 223.81 0% 4%;
-  --primary: 223.81 0% 9%;
-  --primary-foreground: 223.81 0% 98%;
-  --secondary: 223.81 0% 96%;
-  --secondary-foreground: 223.81 0% 9%;
-  --muted: 223.81 0% 88%;
-  --muted-foreground: 223.81 0% 45%;
-  --accent: 223.81 0% 90%;
-  --accent-foreground: 223.81 0% 9%;
-  --destructive: 357.18 100% 45%;
-  --border: 223.81 0% 74%;
-  --input: 223.81 0% 90%;
-  --ring: 223.81 0% 63%;
-  --chart-1: 12 76% 61%;
-  --chart-2: 173 58% 39%;
-  --chart-3: 197 37% 24%;
-  --chart-4: 43 74% 66%;
-  --chart-5: 27 87% 67%;
+.base-gap {
+  gap: var(--sides);
+}
 
-  --sides: 1rem;
-  --modal-sides: 0.75rem;
-  --top-spacing: 5rem;
-  --height-fold: 100vh;
-  --height-fold: 100svh;
-
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
 }

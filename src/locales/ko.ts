@@ -1,0 +1,61 @@
+import type { Translations } from './types';
+
+export const ko: Translations = {
+  nav: {
+    home: '홈',
+    archives: '아카이브',
+    contact: '연락처',
+    about: '소개',
+  },
+  footer: {
+    tagline: '정제된. 미니멀한. 지루하지 않은.',
+    copyright: '— 모든 권리 보유',
+  },
+  home: {
+    featured: '주요 글',
+    readStory: '읽기',
+    forYou: '최신 글',
+    viewAll: '전체 보기',
+    dailyInsight: '오늘의 인사이트',
+    quote: '단순함이 궁극의 정교함이다.',
+    getInTouch: '연락하기',
+    workTogether: '함께 일해요.',
+    sayHello: '인사하기',
+  },
+  profile: {
+    label: '소개',
+    bio: '코드와 문화의 교차점, 에디토리얼 시스템과 공예에 집착하는 디자이너 & 개발자.',
+  },
+  about: {
+    label: '소개',
+    bio: [
+      'AI를 사용해서 주변에 문제를 해결하고 계속 뭔가를 만들고 있는(!) 소프트웨어 엔지니어입니다.',
+      '꾸준한 글쓰기와 정보를 공유하는 것에 대해서 항상 중요하다고 생각했다가.. 부끄러운 것도 있었지만 이제서야 제 생각을 공유하고, 다시 꾸준히 기록을 시작해보려고 합니다.',
+      'Dami UI는 제가 배운 디자인 원칙이나 철학 등, 제 오피니언 중심의 아티클과 튜토리얼, 리소스 모음입니다.',
+      '이 웹사이트는 Notion을 CMS로, Next.js를 프레임워크로 사용합니다.',
+    ],
+    cvLink: '한국어 이력서 보기',
+    contactLabel: '연락하기',
+    contactHeading: '안녕하세요.',
+    contactDesc: '궁금한 점이 있으시면 언제든지 연락주세요.',
+    nameLabel: '이름',
+    namePlaceholder: '이름을 입력하세요',
+    emailLabel: '이메일',
+    emailPlaceholder: 'your@email.com',
+    messageLabel: '메시지',
+    messagePlaceholder: '문의 또는 피드백을 입력하세요... 또는 링크드인으로 연락주세요. linkedin.com/in/kangdami',
+    sendButton: '메시지 보내기',
+    sendingButton: '전송 중...',
+    successTitle: '전송 완료!',
+    successDesc: '메시지 감사합니다. 곧 답변 드리겠습니다.',
+    errorTitle: '오류',
+    errorDesc: '문제가 발생했습니다. 다시 시도해 주세요.',
+  },
+  journal: {
+    archiveLabel: '아카이브',
+    heading: '저널',
+    description: '예술, 디자인, 철학에 관한 선별된 글.',
+    searchPlaceholder: '글 검색...',
+    noResults: '검색 결과 없음',
+  },
+};

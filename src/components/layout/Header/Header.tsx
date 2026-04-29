@@ -1,66 +1,70 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
 export interface NavItem {
-    title: string;
-    href: string;
-  }
-  
+  title: string;
+  href: string;
+}
+
 export const navItems: NavItem[] = [
-  {
-    title: 'Home',
-    href: '/',
-  },
-  {
-    title: 'About',
-    href: '/about'
-  },
-  {
-    title: 'Search',
-    href: '/search'
-  }
+  { title: 'Home', href: '/' },
+  { title: 'About', href: '/about' },
+  { title: 'Search', href: '/search' },
 ];
 
 export function Header() {
   const pathname = usePathname();
 
-
-  const hiddenHeader = () => {
-     if (pathname.startsWith('/posts')) {
-       return null
-     }
-  }
-
   return (
-    <header className="grid fixed top-0 left-0 z-50 grid-cols-3 items-start w-full p-sides md:grid-cols-12 md:gap-sides text-black dark:text-white">
-      <div className="block flex-none md:hidden">
-        {/* <MobileMenu collections={collections} /> */}
+    <header className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px] border-b border-[var(--outline-variant)]/40 bg-[var(--background)]/80 backdrop-blur-md">
+      <div className="px-[var(--sides)] h-14 flex items-center justify-between">
+
+        {/* Logo */}
+        <Link
+          href="/"
+          prefetch
+          className="text-xl font-bold tracking-tight text-[var(--foreground)]"
+          style={{ fontFamily: 'var(--font-body)' }}
+        >
+          ©DAMI UI
+        </Link>
+
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-6">
+          <ul className="flex items-center gap-6">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  prefetch
+                  className={cn(
+                    'text-xs font-semibold uppercase tracking-widest transition-colors',
+                    pathname === item.href
+                      ? 'text-[var(--foreground)]'
+                      : 'text-[var(--tertiary)] hover:text-[var(--foreground)]'
+                  )}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Mobile: search icon only (nav handled by BottomNav) */}
+        <Link
+          href="/search"
+          className="md:hidden text-[var(--foreground)] p-1"
+          aria-label="Search"
+        >
+          <Search size={20} strokeWidth={1.5} />
+        </Link>
       </div>
-      <Link href="/" className="w-full md:h-auto max-w-96 break-keep md:col-span-3 xl:col-span-3" prefetch>
-        <p className="md:block hidden text-3xl font-bold shrink-0 text-black dark:text-white">©DAMI UI</p>
-        {/* <LogoSvg className="w-auto h-6 max-md:place-self-center md:w-full md:h-auto max-w-96" /> */}
-      </Link>
-      <nav className="flex w-full gap-2 justify-end items-center md:col-span-9 xl:col-span-9">
-        <ul className={`${hiddenHeader()} items-center gap-5 py-0.5 px-3 bg-background/10 rounded-sm backdrop-blur-md hidden md:flex`}>
-          {navItems.map(item => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={cn(
-                  'font-semibold text-base transition-colors duration-200 uppercase text-black dark:text-white',
-                  pathname === item.href ? 'text-foreground' : 'text-foreground/50'
-                )}
-                prefetch
-              >
-                {item.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
     </header>
   );
 }
 
-export default Header
+export default Header;

@@ -6,14 +6,18 @@ import { BlockObjectResponse, RichTextItemResponse } from "@notionhq/client/buil
 
 export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {blocks.map((block) => {
         const { id, type } = block
 
         switch (type) {
           case "paragraph":
             return (
-              <p key={id} className='text-black dark:text-white'>
+              <p
+                key={id}
+                className="text-base leading-relaxed text-[var(--foreground)]"
+                style={{ fontFamily: 'var(--font-body)' }}
+              >
                 {block.paragraph.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -22,7 +26,11 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "heading_1":
             return (
-              <h1 key={id} className="text-3xl font-bold mt-8 mb-4 text-black dark:text-white">
+              <h1
+                key={id}
+                className="text-3xl font-medium mt-10 mb-3 text-[var(--foreground)]"
+                style={{ fontFamily: 'var(--font-headline)' }}
+              >
                 {block.heading_1.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -31,7 +39,11 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "heading_2":
             return (
-              <h2 key={id} className="text-2xl font-bold mt-8 mb-4 text-black dark:text-white">
+              <h2
+                key={id}
+                className="text-2xl font-medium mt-8 mb-2 text-[var(--foreground)]"
+                style={{ fontFamily: 'var(--font-headline)' }}
+              >
                 {block.heading_2.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -40,7 +52,11 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "heading_3":
             return (
-              <h3 key={id} className="text-xl font-bold mt-6 mb-4 text-black dark:text-white">
+              <h3
+                key={id}
+                className="text-xl font-medium mt-6 mb-2 text-[var(--foreground)]"
+                style={{ fontFamily: 'var(--font-headline)' }}
+              >
                 {block.heading_3.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -49,7 +65,11 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "bulleted_list_item":
             return (
-              <li key={id}>
+              <li
+                key={id}
+                className="text-base leading-relaxed text-[var(--foreground)] ml-4 list-disc"
+                style={{ fontFamily: 'var(--font-body)' }}
+              >
                 {block.bulleted_list_item.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -58,39 +78,56 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "numbered_list_item":
             return (
-              <li key={id}>
+              <li
+                key={id}
+                className="text-base leading-relaxed text-[var(--foreground)] ml-4 list-decimal"
+                style={{ fontFamily: 'var(--font-body)' }}
+              >
                 {block.numbered_list_item.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
               </li>
             )
 
-          case "image":
-            const imageUrl = block.image.type === "external" 
-              ? block.image.external.url 
+          case "image": {
+            const imageUrl = block.image.type === "external"
+              ? block.image.external.url
               : block.image.file.url
             const caption = block.image.caption?.length ? block.image.caption[0].plain_text : ""
 
             return (
               <figure key={id} className="my-8">
-                <div className="relative h-96 w-full">
+                <div className="relative w-full aspect-[4/3] bg-[var(--neutral)]">
                   <Image
                     src={imageUrl || ""}
-                    alt={caption || "Blog image"}
+                    alt={caption || "Article image"}
                     fill
-                    className="object-contain"
+                    className="object-cover"
+                    unoptimized
                   />
                 </div>
                 {caption && (
-                  <figcaption className="text-center text-sm text-muted-foreground mt-2 text-black dark:text-white">{caption}</figcaption>
+                  <figcaption
+                    className="text-center text-xs text-[var(--tertiary)] mt-2"
+                    style={{ fontFamily: 'var(--font-body)' }}
+                  >
+                    {caption}
+                  </figcaption>
                 )}
               </figure>
             )
+          }
 
           case "code":
             return (
-              <pre key={id} className="p-4 bg-muted rounded-md overflow-x-auto">
-                <code>
+              <pre
+                key={id}
+                className="p-4 bg-[var(--neutral)] rounded-sm overflow-x-auto"
+              >
+                <code
+                  className="text-sm text-[var(--foreground)]"
+                  style={{ fontFamily: 'monospace' }}
+                >
                   {block.code.rich_text.map((text: RichTextItemResponse, index: number) => (
                     <span key={index}>{text.plain_text}</span>
                   ))}
@@ -100,7 +137,11 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
 
           case "quote":
             return (
-              <blockquote key={id} className="border-l-4 pl-4 italic">
+              <blockquote
+                key={id}
+                className="border-l-2 border-[var(--foreground)] pl-5 py-1 italic text-xl text-[var(--foreground)]"
+                style={{ fontFamily: 'var(--font-headline)' }}
+              >
                 {block.quote.rich_text.map((text: RichTextItemResponse, index: number) => (
                   <RichText key={index} text={text} />
                 ))}
@@ -108,14 +149,10 @@ export function NotionRenderer({ blocks }: { blocks: BlockObjectResponse[] }) {
             )
 
           case "divider":
-            return <hr key={id} className="my-8 text-black dark:text-white" />
+            return <hr key={id} className="my-8 border-[var(--outline-variant)]" />
 
           default:
-            return (
-              <div key={id} className="text-gray-900 dark:text-white">
-                Unsupported block type: {type}
-              </div>
-            )
+            return null
         }
       })}
     </div>
@@ -128,7 +165,11 @@ function RichText({ text }: { text: RichTextItemResponse }) {
   const content: React.ReactNode = text.plain_text || ""
 
   if (text.annotations.code) {
-    return <code className="bg-muted px-1 py-0.5 rounded">{content}</code>
+    return (
+      <code className="bg-[var(--neutral)] text-[var(--foreground)] px-1.5 py-0.5 rounded-sm text-sm font-mono">
+        {content}
+      </code>
+    )
   }
 
   if (text.annotations.underline) {
@@ -149,7 +190,10 @@ function RichText({ text }: { text: RichTextItemResponse }) {
 
   if (text.href) {
     return (
-      <Link href={text.href} className="text-primary underline text-black dark:text-white">
+      <Link
+        href={text.href}
+        className="text-[var(--foreground)] underline underline-offset-2 hover:text-[var(--tertiary)] transition-colors"
+      >
         {content}
       </Link>
     )
