@@ -19,8 +19,8 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px] border-b border-[var(--outline-variant)]/40 bg-[var(--background)]/80 backdrop-blur-md">
-      <div className="px-[var(--sides)] h-14 flex items-center justify-between">
+    <header className="fixed top-0 z-50 w-full max-w-[430px] left-1/2 -translate-x-1/2 lg:left-[280px] lg:right-0 lg:translate-x-0 lg:max-w-none lg:w-auto border-b border-[var(--outline-variant)]/40 lg:border-b-0 bg-[var(--background)]/80 backdrop-blur-md">
+      <div className="lg:max-w-[430px] lg:mx-auto px-[var(--sides)] h-14 flex items-center justify-between">
 
         {/* Logo */}
         <Link

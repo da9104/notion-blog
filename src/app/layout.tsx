@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import Header from "@/components/layout/Header/Header";
 import BottomNav from "@/components/layout/BottomNav";
+import { DesktopSidebar } from "@/components/layout/DesktopSidebar";
 
 const newsreader = Newsreader({
   variable: "--font-headline",
@@ -54,13 +55,19 @@ export default function RootLayout({
         <LocaleProvider>
         <ThemeProvider defaultTheme="system" enableSystem disableTransitionOnChange>
           <Analytics />
-          {/* Phone-frame shell — max 430px, centered on all screen sizes */}
-          <div className="relative mx-auto w-full max-w-[430px] min-h-screen bg-[var(--background)] shadow-[0_0_60px_rgba(0,0,0,0.12)]">
-            <main data-vaul-drawer-wrapper="true">
-              <Header />
-              {children}
-            </main>
-            <BottomNav />
+          {/* Desktop-only fixed left branding panel */}
+          <DesktopSidebar />
+
+          {/* Offset wrapper — pushes phone frame right of sidebar on desktop */}
+          <div className="lg:pl-[280px]">
+            {/* Phone-frame shell — max 430px, centered on all screen sizes */}
+            <div className="relative mx-auto w-full max-w-[430px] min-h-screen bg-[var(--background)] shadow-[0_0_60px_rgba(0,0,0,0.12)]">
+              <main data-vaul-drawer-wrapper="true">
+                <Header />
+                {children}
+              </main>
+              <BottomNav />
+            </div>
           </div>
         </ThemeProvider>
         </LocaleProvider>

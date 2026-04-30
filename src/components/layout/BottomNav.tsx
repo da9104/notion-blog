@@ -17,7 +17,7 @@ export default function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px] border-t border-[var(--outline-variant)] bg-[var(--background)]/90 backdrop-blur-md">
+    <nav className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-[430px] border-t border-[var(--outline-variant)] bg-[var(--background)]/90 backdrop-blur-md">
       <ul className="flex items-center justify-around h-16 px-2">
         {tabs.map(({ label, href, icon: Icon }) => {
           const active = href === '/' ? pathname === '/' : pathname.startsWith(href.split('#')[0]);
