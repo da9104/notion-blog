@@ -1,5 +1,9 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: undefined,
+  outputFileTracingRoot: path.join(__dirname),
   env: {
     NOTION_DATABASE_ID: process.env.NOTION_DATABASE_ID,
   },

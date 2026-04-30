@@ -6,4 +6,5 @@ export interface ProcessedPost {
   date?: string;
   tags: Array<{ id: string; name: string }>;
   description?: string;
+  featured?: boolean;
 }

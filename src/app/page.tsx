@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { PageLayout } from "@/components/layout/page-layout";
 import { notionFetch } from "@/lib/notion";
 import { FeaturedHero } from "@/components/home/FeaturedHero";
@@ -15,8 +17,8 @@ export default async function Home() {
     .filter((p): p is PageObjectResponse => "properties" in p)
     .map((p) => processPost(p, blocks));
 
-  const [featured, ...rest] = posts;
-  const forYou = rest.slice(0, 6);
+  const featured = posts.find(p => p.featured);
+  const forYou = posts.filter(p => !p.featured).slice(0, 6);
 
   if (!featured) {
     return (

@@ -44,6 +44,7 @@ export function processPost(post: PageObjectResponse, blocks: Array<any>): Proce
   const dateProp = post.properties.PublishedDate as { date: { start: string } | null };
   const tagsProp = post.properties.Tags as { multi_select: Array<{ id: string; name: string }> } | undefined;
   const descProp = post.properties.Description as { rich_text: Array<{ plain_text: string }> } | undefined;
+  const featuredProp = post.properties.Featured as { checkbox: boolean } | undefined;
 
   const slug =
     slugProp?.type === "rich_text"
@@ -60,5 +61,6 @@ export function processPost(post: PageObjectResponse, blocks: Array<any>): Proce
     date: dateProp?.date?.start,
     tags: tagsProp?.multi_select ?? [],
     description: descProp?.rich_text[0]?.plain_text,
+    featured: featuredProp?.checkbox ?? false,
   };
 }
