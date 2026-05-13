@@ -78,10 +78,14 @@ export function DesktopSidebar() {
         className="text-base font-medium text-[var(--foreground)] mb-4"
         style={{ fontFamily: 'var(--font-headline)' }}
       >
-        Dami K.
+        Sign up for our free newsletters.
+      </p>
+
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--tertiary)]">
+        Stay up to date with new posts, practical guides, and tools—no spam, just useful reads.
       </p>
       <ul className="flex flex-col gap-3 mb-auto">
-        {credentials.map((item, i) => (
+        {/* {credentials.map((item, i) => (
           <li key={i} className="flex gap-3 items-start">
             <span
               className="text-[10px] font-semibold text-[var(--tertiary)] tabular-nums w-4 shrink-0 mt-0.5"
@@ -96,7 +100,7 @@ export function DesktopSidebar() {
               {item}
             </span>
           </li>
-        ))}
+        ))} */}
       </ul>
 
       {/* Bottom controls */}
